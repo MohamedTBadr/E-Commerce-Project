@@ -1,19 +1,16 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+
 
 @Component({
   selector: 'app-navbar',
+  standalone: true,
+  imports: [RouterLink , RouterLinkActive],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
+
 export class NavbarComponent {
-  searchTerm: string = '';
 
-  constructor(private router: Router) {}
-
-  onSearch() {
-    if (this.searchTerm.trim()) {
-      this.router.navigate(['/search'], { queryParams: { q: this.searchTerm } });
-    }
-  }
 }
