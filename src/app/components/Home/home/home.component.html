@@ -1,0 +1,66 @@
+<section class="container mx-auto my-5">
+    <h1 class="text-4xl mb-3">Popular Products</h1>
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            @for ( product of ProductList; let i = $index; track product.id) {
+            <button type="button" data-bs-target="#carouselExampleIndicators" [attr.data-bs-slide-to]="i"
+                [class.active]="i === 0" [attr.aria-current]="i === 0 ? 'true' : null"
+                [attr.aria-label]="'Slide ' + (i + 1)">
+            </button>
+            }
+        </div>
+        <div class="carousel-inner">
+            @for ( product of ProductList; let i = $index; track product.id) {
+            <div class="carousel-item" [class.active]="i === 0">
+                <img [src]="product.image" class="d-block w-100 h-[250px] object-contain" alt="product image">
+            </div>
+            }
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon text-dark" aria-hidden="true"><i
+                    class="fa-solid fa-chevron-left"></i></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon text-dark" aria-hidden="true"><i
+                    class="fa-solid fa-angle-right"></i></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>
+
+
+<section class="container mx-auto">
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 my-6">
+        @for (Prod of ProductList.slice(1,9); track
+        Prod.id) {
+        <div class="Card p-4 rounded-xl shadow-lg bg-white dark:bg-gray-900">
+            <div>
+                <img class="w-full h-[250px] object-contain" [src]="Prod.image" alt="{{Prod.title}}" />
+                <h1 class="text-gray-800 dark:text-white">{{ Prod.title.split(' ', 2).join(' ') }}</h1>
+                <h2 class="my-2 text-black dark:text-white">${{ Prod.price }}</h2>
+                <p class="border-b-2 border-gray-200 dark:border-gray-600"></p>
+                <div class="Free flex justify-between my-3">
+                    <p class="text-gray-600 dark:text-gray-300"><i class="fa-solid fa-truck"></i> Free Shipping</p>
+                    <p class="text-gray-600 dark:text-gray-300"><i class="fa-solid fa-gift"></i> Free Gift</p>
+                </div>
+            </div>
+            <div class="flex justify-between items-center">
+                <button class="btn-main bg-red-500 hover:bg-red-800 text-white rounded-full py-1 px-4">
+                    Add To Cart <i class="fa-solid fa-arrow-pointer fa-rotate-90"></i>
+                </button>
+                <div class="flex items-center">
+                    <div class="HeartIcons border-red-600 text-red-600 dark:text-red-400">
+                    </div>
+                    <div class="flex items-center Star">
+                        <i class="fa-solid fa-star text-yellow-300 me-1"></i>
+                        <span class="text-gray-800 dark:text-white">{{ Prod.rating.rate }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</section>
