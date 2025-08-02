@@ -1,11 +1,14 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,HttpClientModule],
+  standalone: true,
+  imports: [RouterOutlet, HttpClientModule, NavbarComponent, FooterComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
