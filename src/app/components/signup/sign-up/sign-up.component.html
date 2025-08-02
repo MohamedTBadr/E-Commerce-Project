@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center align-items-center vh-100 bg-gradient" style="background: linear-gradient(to right, #6a11cb, #2575fc);">
   <div class="bg-white p-4 rounded shadow" style="width: 100%; max-width: 400px;">
-    <h2 class="text-center mb-4">Login</h2>
+    <h2 class="text-center mb-4">SignUp</h2>
 
     <form [formGroup]="SignUpForm" (ngSubmit)="OnSubmit()">
       <div class="mb-3">
@@ -41,7 +41,7 @@
         </div>
       </div>
 
-      <button type="submit" class="btn btn-primary w-100" [disabled]="SignUpForm.invalid">Login</button>
+      <button type="submit" class="btn btn-primary w-100" [disabled]="SignUpForm.invalid">SignUp</button>
     </form>
   </div>
 </div>
