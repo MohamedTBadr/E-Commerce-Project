@@ -66,7 +66,7 @@ export class Cart {
   deleteItem(item: ICartItem) {
     this.cartService.deleteCartItem(item).subscribe(() => {
       this.loadCart();
-      this.toastr.success('Product deleted successfully', '', {
+      this.toastr.success('Product removed successfully', '', {
         timeOut: 1000,
       });
     });
