@@ -1,0 +1,33 @@
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row g-4 bg-white shadow rounded p-4">
+      <!-- Product Image -->
+      <div class="col-lg-6 d-flex justify-content-center align-items-center">
+        <img [src]="ProductDetails.image" class="img-fluid w-50" alt="{{ ProductDetails.title }}">
+      </div>
+
+      <!-- Product Content -->
+      <div class="col-lg-6">
+        <h6 class="text-muted">{{ ProductDetails.category }}</h6>
+
+        <h2 class="my-3 h5 fw-bold">{{ ProductDetails.title }}</h2>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <p class="h6 mb-0">${{ ProductDetails.price }}</p>
+
+          <div class="d-flex align-items-center">
+            <i class="fa-solid fa-star text-warning me-1"></i>
+            <span class="text-muted">{{ ProductDetails.rating.rate }}</span>
+          </div>
+        </div>
+
+        <hr>
+
+        <h5 class="mb-2">Description:</h5>
+        <p class="text-muted small lh-lg">
+          {{ ProductDetails.description }}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

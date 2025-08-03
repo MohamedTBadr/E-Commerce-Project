@@ -11,4 +11,7 @@ export class ProductsService {
   getAllProducts(): Observable<any> {
     return this.httpClient.get('https://fakestoreapi.com/products');
   }
+   getSpecificProduct(id: number): Observable<any> {
+    return this.httpClient.get(`https://fakestoreapi.com/products/${id}`);
+  }
 }

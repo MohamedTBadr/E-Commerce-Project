@@ -26,6 +26,7 @@ export const appConfig: ApplicationConfig = {
     provideToastr(),
     importProvidersFrom(BrowserAnimationsModule,ToastrModule.forRoot({
   positionClass: 'toast-custom-top-right',
+  
 })),
   ],
 };

@@ -3,20 +3,20 @@ import { Iproduct } from '../../../interfaces/iproduct';
 import { ProductsService } from '../../../services/products/products.service';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../../services/cart/cart';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-products',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
 })
 export class ProductsComponent implements OnInit {
   private readonly productsService = inject(ProductsService);
   private readonly cartService = inject(CartService);
-
   ProductList: Iproduct[] = [];
-  filteredProducts: Iproduct[] = [];
   searchTerm: string = '';
+  filteredProducts: Iproduct[] = [];
 
   getProducts() {
     this.productsService.getAllProducts().subscribe({

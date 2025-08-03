@@ -1,8 +1,11 @@
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map, switchMap, forkJoin } from 'rxjs';
+import { Observable, defer, of, forkJoin, switchMap, map, catchError, throwError } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { ICartItem } from '../../interfaces/IcartItem';
 import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 export class CartService {
   private cartServer = 'http://localhost:3000/cart';
 
-  constructor(private http: HttpClient, private toastr: ToastrService) {}
+  constructor(private http: HttpClient, private toastr: ToastrService) { }
 
   getCart(): Observable<ICartItem[]> {
     return this.http.get<ICartItem[]>(this.cartServer);
@@ -25,7 +28,39 @@ export class CartService {
   }
 
   deleteCartItem(item: ICartItem): Observable<any> {
-    return this.http.delete(`${this.cartServer}/${item.id}`);
+    return defer(() => {
+      return new Observable(observer => {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: `Do you want to remove "${item.title}" from the cart?`,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!',
+          cancelButtonText: 'No, cancel'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            observer.next(true); // Notify that the operation is starting
+            this.http.delete(`${this.cartServer}/${item.id}`).pipe(
+              tap(() => {
+                this.toastr.success('Item removed successfully', '', { timeOut: 1000 });
+                observer.next(true); // Notify success
+              }),
+              catchError(error => {
+                this.toastr.error('Failed to remove item.', 'Error');
+                observer.error(error);
+                return throwError(() => error);
+              })
+            ).subscribe({
+              complete: () => observer.complete()
+            });
+          } else {
+            observer.complete(); // Cancelled, complete without action
+          }
+        });
+      });
+    });
   }
 
   clearCart(): Observable<any> {

@@ -3,10 +3,11 @@ import { Iproduct } from './../../../interfaces/iproduct';
 import { Component, inject, OnInit } from '@angular/core';
 import { ProductsService } from '../../../services/products/products.service';
 import { CartService } from '../../../services/cart/cart';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
