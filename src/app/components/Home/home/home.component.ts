@@ -2,16 +2,19 @@ import { Iproduct } from './../../../interfaces/iproduct';
 
 import { Component, inject, OnInit } from '@angular/core';
 import { ProductsService } from '../../../services/products/products.service';
+import { CartService } from '../../../services/cart/cart';
 
 @Component({
   selector: 'app-home',
   imports: [],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
   private readonly productsService = inject(ProductsService);
-  ProductList: Iproduct[] = []
+  private readonly cartService = inject(CartService);
+
+  ProductList: Iproduct[] = [];
   getProducts() {
     this.productsService.getAllProducts().subscribe({
       next: (res) => {
@@ -20,10 +23,13 @@ export class HomeComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-      }
-    })
+      },
+    });
   }
   ngOnInit(): void {
-    this.getProducts()
+    this.getProducts();
+  }
+  addToCart(product: any) {
+    this.cartService.addToCart(product);
   }
 }

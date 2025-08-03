@@ -1,0 +1,84 @@
+<section class="container my-5">
+  <div class="bg-light rounded p-4 shadow-sm">
+    @if (cart.length != 0) {
+    <div
+      class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2"
+    >
+      <div>
+        <h2 class="fw-semibold fs-4 mb-1">Your Cart</h2>
+        <p class="mb-0 fs-6">
+          Total Price:
+          <span class="fw-bold">{{ totalPrice }}</span>
+          <span class="text-muted small"> EGP</span>
+        </p>
+      </div>
+      <button
+        (click)="clearCart()"
+        class="btn btn-danger text-white btn-sm mt-2 mt-md-0"
+      >
+        <i class="fa-solid fa-trash-can me-1"></i> Clear Cart
+      </button>
+    </div>
+
+    @for (product of cart; track $index) {
+    <div class="border-bottom py-3">
+      <div class="row g-3 align-items-center">
+        <div class="row align-items-center col-md-8 col-12">
+          <div class="col-md-3 col-4 text-center">
+            <img
+              [src]="product?.image"
+              class="img-fluid rounded"
+              style="max-height: 150px; object-fit: contain"
+              alt="cart item image"
+            />
+          </div>
+          <div class="col-md-9 col-8">
+            <h5 class="fw-medium fs-5 mb-1">
+              {{ product?.title?.split(" ")?.slice(0, 5)?.join(" ") }}
+            </h5>
+            <p class="mb-1 fs-6 text-muted">
+              Price:
+              <span>{{ product?.price }}</span>
+              <span> EGP</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-2 col-6 text-center">
+          <div class="btn-group" role="group">
+            <button
+              (click)="decreaseQuantity(product)"
+              class="btn btn-outline-dark btn-sm"
+            >
+              -
+            </button>
+            <span class="px-3 fw-semibold fs-6 pt-1">{{
+              product?.quantity
+            }}</span>
+            <button
+              (click)="increaseQuantity(product)"
+              class="btn btn-outline-dark btn-sm"
+            >
+              +
+            </button>
+          </div>
+        </div>
+        <div class="col-md-2 col-6 text-center text-md-end">
+          <button
+            (click)="deleteItem(product)"
+            class="btn btn-outline-danger btn-sm"
+          >
+            <i class="fa-solid fa-trash-can me-1"></i> Remove
+          </button>
+        </div>
+      </div>
+    </div>
+    } 
+  } @else {
+    <div class="d-flex justify-content-center align-items-center py-5">
+      <h4 class="text-danger fw-semibold fs-5">
+        Your cart is empty
+      </h4>
+    </div>
+    }
+  </div>
+</section>
