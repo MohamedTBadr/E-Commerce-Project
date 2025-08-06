@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { Product } from '../../../interfaces/product';
 
 @Component({
   selector: 'app-categories',
-  imports: [CommonModule , FormsModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css'
 })
@@ -16,27 +18,34 @@ export class CategoriesComponent implements OnInit {
   expandedCategories: Set<string> = new Set();
   searchTerm: string = '';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.fetchCategories();
+    this.fetchProducts();
   }
 
-  fetchCategories(): void {
-    this.http.get<string[]>('https://fakestoreapi.com/products/categories')
-      .subscribe((cats) => {
-        this.categories = cats;
-        this.filteredCategories = cats;
-        cats.forEach((cat) => this.fetchProductsByCategory(cat));
-      });
-  }
+  fetchProducts(): void {
+  this.http.get<{ products: Product[] }>('https://dummyjson.com/products?limit=100')
+    .subscribe((res) => {
+      const products = res.products;
 
-  fetchProductsByCategory(category: string): void {
-    this.http.get<any[]>(`https://fakestoreapi.com/products/category/${category}`)
-      .subscribe((products) => {
-        this.categoryProducts[category] = products;
+      const categoriesSet = new Set<string>();
+
+      products.forEach((product: Product) => {
+        categoriesSet.add(product.category);
+        // استخدم أول صورة فقط
+        product.image = product.images[0];
       });
-  }
+
+      this.categories = Array.from(categoriesSet);
+      this.filteredCategories = [...this.categories];
+
+      this.categories.forEach((category: string) => {
+        this.categoryProducts[category] = products.filter((p: Product) => p.category === category);
+      });
+    });
+}
+
 
   onSearch(): void {
     const term = this.searchTerm.toLowerCase();

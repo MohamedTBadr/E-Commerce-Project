@@ -6,12 +6,13 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule , ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  loginError = ''
 
   constructor(
     private fb: FormBuilder,
@@ -39,6 +40,9 @@ export class LoginComponent {
         this.router.navigate(['home']);
       },
       error: (err) => {
+        if (err.status === 40) {
+          this.loginError = 'invalid username or password'
+        }
         console.error('Login failed', err);
       }
     });
